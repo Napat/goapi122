@@ -1,15 +1,15 @@
 # GoApi122
 
-Because enhanced_routing_patterns in Go 1.22. We don't need to use the external `mux` package anymore.
+With the introduction of enhanced routing patterns in Go 1.22, there’s no longer a need to use the external mux package.
 
 - https://tip.golang.org/doc/go1.22#enhanced_routing_patterns
 - https://go.dev/blog/routing-enhancements
 
-```sh
+```sh {"id":"01J7T85S9WB6MD6ZZHG75Y8X7Y"}
 go run *.go
 ```
 
-```sh
+```sh {"id":"01J7T85S9YZ574NZM1E203K9ZC"}
 # health -> OK
 curl http://localhost:8080/health
 

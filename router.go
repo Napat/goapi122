@@ -23,8 +23,8 @@ func (a *APIServer) Start() error {
 		w.Write([]byte("OK"))
 	})
 
-	router.Handle("/api/v1/", http.StripPrefix("/api/v1", MdwRequireAuthMiddleware(apiV1())))
-	router.Handle("/api/v2/", http.StripPrefix("/api/v2", MdwChainRequestResponseLogAuth(apiV2())))
+	router.Handle("/api/v1/", http.StripPrefix("/api/v1", MdwRequireAuthenticationMiddleware(apiV1())))
+	router.Handle("/api/v2/", http.StripPrefix("/api/v2", MdwChainRequestResponseLogAuthentication(apiV2())))
 
 	server := &http.Server{
 		Addr:    a.addr,
@@ -41,7 +41,7 @@ func apiV1() http.Handler {
 
 	v1.HandleFunc("GET /user/name", handleApiV1GetUser)
 	v1.HandleFunc("POST /user/name", handleApiV1PostUser)
-	v1.Handle("GET /user/id/{userID}", MdwRequireSuperUserMiddleware(http.HandlerFunc(handleApiV1GetUserID)))
+	v1.Handle("GET /user/id/{userID}", MdwRequireSuperUserOrHigherMiddleware()(http.HandlerFunc(handleApiV1GetUserID)))
 
 	return v1
 }
